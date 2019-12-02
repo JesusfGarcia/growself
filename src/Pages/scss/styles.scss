@@ -1,0 +1,114 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	background-image: url('../../assets/background.jpg');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+.contenedor {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 5px 5px;
+	height: 100%;
+}
+.tarjeta {
+	width: 90%;
+}
+.contenedortarjeta {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.forgot {
+	color: #989696;
+	font-family: 'Times New Roman', Times, serif;
+	font-weight: 400;
+}
+
+.navbar {
+	height: 5vh;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	background-color: #f5f5f5;
+	color: #989696;
+	-webkit-box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.26);
+	-moz-box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.26);
+	box-shadow: 0px 3px 5px 2px rgba(0, 0, 0, 0.26);
+}
+.svg-inline--fa {
+	display: inline-block;
+	font-size: 100px;
+}
+.numhumedad {
+	margin: 0 auto;
+	font-weight: 800;
+	color: #3f51b5;
+	font-size: 25px;
+	font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.nombre {
+	margin: 0 auto;
+	font-weight: bold;
+	font-size: 20px;
+	color: rgba(0, 0, 0, 0.26);
+	font-family: 'Times New Roman', Times, serif;
+}
+
+.tarjeta2 {
+	width: 85%;
+	margin-top: 10px;
+}
+.MuiSelect-select {
+	cursor: pointer;
+	min-width: 160px;
+	user-select: none;
+	border-radius: 0;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+}
+
+//animaciones
+@keyframes bounceInDown {
+	from,
+	60%,
+	75%,
+	90%,
+	to {
+		animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+	}
+
+	0% {
+		opacity: 0;
+		transform: translate3d(0, -3000px, 0);
+	}
+
+	60% {
+		opacity: 1;
+		transform: translate3d(0, 25px, 0);
+	}
+
+	75% {
+		transform: translate3d(0, -10px, 0);
+	}
+
+	90% {
+		transform: translate3d(0, 5px, 0);
+	}
+
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+.bounceInDown {
+	animation-name: bounceInDown;
+}
