@@ -5,12 +5,13 @@ import {
 	InputLabel,
 	FormControl,
 	Button,
+	TextField,
 } from '@material-ui/core'
 import '../scss/styles.scss'
 import Firebase from 'firebase'
 
 class configuration extends Component {
-	state = { planta: '', minhum: '', maxhum: '' }
+	state = { planta: '', minhum: '', maxhum: '', mostrar: true }
 	getUserData = async () => {
 		let ref = Firebase.database()
 			.ref()
@@ -34,6 +35,19 @@ class configuration extends Component {
 		ref.child('maxhum').set(this.state.maxhum)
 		ref.child('minhum').set(this.state.minhum)
 		ref.child('nombre').set(this.state.planta)
+		this.props.history.goBack()
+	}
+	mostrar = () => {
+		this.setState({ mostrar: !this.state.mostrar })
+	}
+	handlename = (event) => {
+		this.setState({ planta: event.target.value })
+	}
+	handlemin = (event) => {
+		this.setState({ minhum: event.target.value })
+	}
+	handlemax = (event) => {
+		this.setState({ maxhum: event.target.value })
 	}
 	componentDidMount() {
 		this.getUserData()
@@ -98,6 +112,53 @@ class configuration extends Component {
 								<MenuItem value='fresa'>Fresa</MenuItem>
 							</Select>
 						</FormControl>
+
+						<hr />
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+								alignItems: 'center',
+							}}
+						>
+							<p onClick={() => this.mostrar()}>Configurar manualmente</p>
+							<div
+								style={{
+									width: '100%',
+									height: '1px',
+									backgroundColor: '#3f51b5',
+								}}
+							></div>
+						</div>
+						<div hidden={this.state.mostrar}>
+							<TextField
+								onChange={this.handlename}
+								id='Planta'
+								label='Planta'
+								placeholder='Planta'
+								margin='dense'
+							></TextField>
+							<TextField
+								onChange={this.handlemin}
+								margin='dense'
+								type='number'
+								InputLabelProps={{
+									shrink: true,
+								}}
+								id='minhum'
+								label='Humedad Minima'
+							></TextField>
+							<TextField
+								onChange={this.handlemax}
+								margin='dense'
+								type='number'
+								InputLabelProps={{
+									shrink: true,
+								}}
+								id='maxhum'
+								label='Humedad Máxima'
+							></TextField>
+						</div>
 						<Button
 							onClick={() => this.writeUserData()}
 							style={{ marginTop: '10px' }}
@@ -105,6 +166,14 @@ class configuration extends Component {
 							color='primary'
 						>
 							GUARDAR CAMBIOS
+						</Button>
+						<Button
+							onClick={() => this.props.history.goBack()}
+							style={{ marginTop: '10px' }}
+							color='secondary'
+							variant='outlined'
+						>
+							REGRESAR
 						</Button>
 					</div>
 				</div>
