@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../scss/styles.scss'
 import firebase from 'firebase'
+import { Button } from '@material-ui/core'
 const Macetas = React.lazy(() => import('./Components/Macetas'))
 class principal extends Component {
 	state = {
@@ -10,21 +11,37 @@ class principal extends Component {
 		},
 		hide: 'true',
 	}
-	componentWillMount() {
-		const nameRef = firebase
-			.database()
-			.ref()
-			.child('users')
-			.child('usuario1')
-		nameRef.on('value', (snapshot) => {
-			this.setState({ plantas: snapshot.val(), hide: false })
-		})
+	componentDidMount() {
+		if (!localStorage.getItem('TOKEN')) {
+			this.props.history.push('/login')
+		} else {
+			const nameRef = firebase
+				.database()
+				.ref()
+				.child('users')
+				.child(localStorage.getItem('TOKEN'))
+			nameRef.on('value', (snapshot) => {
+				try {
+					this.setState({ plantas: snapshot.val(), hide: false })
+				} catch (error) {}
+			})
+		}
 	}
 	render() {
 		return (
 			<div hidden={this.state.hide}>
 				<div className='navbar'>
 					<h5>GrowSelf</h5>
+					<Button
+						onClick={() => {
+							localStorage.removeItem('TOKEN')
+							this.props.history.push('/login')
+						}}
+						color='secondary'
+						size='small'
+					>
+						Salir
+					</Button>
 				</div>
 				<div className='contenedor'>
 					<Macetas

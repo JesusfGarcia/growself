@@ -40,7 +40,7 @@ function App() {
 						render={(props) => <Config {...props} />}
 					></Route>
 					<Route
-						path='/'
+						path='/home'
 						name='Home'
 						render={(props) => <Principal {...props} />}
 					/>

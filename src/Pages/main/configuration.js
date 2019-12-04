@@ -9,6 +9,10 @@ import {
 } from '@material-ui/core'
 import '../scss/styles.scss'
 import Firebase from 'firebase'
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
+const MySwal = withReactContent(Swal)
 
 class configuration extends Component {
 	state = { planta: '', minhum: '', maxhum: '', mostrar: true }
@@ -16,7 +20,7 @@ class configuration extends Component {
 		let ref = Firebase.database()
 			.ref()
 			.child('users')
-			.child('usuario1')
+			.child(localStorage.getItem('TOKEN'))
 			.child('planta' + this.props.match.params.id)
 		ref.on('value', (snapshot) => {
 			const state = snapshot.val()
@@ -30,11 +34,14 @@ class configuration extends Component {
 	writeUserData = () => {
 		let ref = Firebase.database()
 			.ref('users')
-			.child('usuario1')
+			.child(localStorage.getItem('TOKEN'))
 			.child('planta' + this.props.match.params.id)
 		ref.child('maxhum').set(this.state.maxhum)
 		ref.child('minhum').set(this.state.minhum)
 		ref.child('nombre').set(this.state.planta)
+		MySwal.fire({
+			text: 'Se ha actualizado la maceta',
+		})
 		this.props.history.goBack()
 	}
 	mostrar = () => {
@@ -50,7 +57,11 @@ class configuration extends Component {
 		this.setState({ maxhum: event.target.value })
 	}
 	componentDidMount() {
-		this.getUserData()
+		if (!localStorage.getItem('TOKEN')) {
+			this.props.history.push('/login')
+		} else {
+			this.getUserData()
+		}
 	}
 
 	handleChange = (event) => {
